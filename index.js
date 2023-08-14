@@ -26,6 +26,7 @@ class Sprite {
         }
         this.color = color
         this.isAttacking
+        this.health = 100
     }
 
     draw() {
@@ -33,10 +34,10 @@ class Sprite {
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
 
         //attack box
-        // if (this.isAttacking) {
+        if (this.isAttacking) {
             c.fillStyle = 'green'
             c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
-        // }
+        }
     }
     
     update(){
@@ -153,7 +154,8 @@ function animate() {
         rectangle2: enemy
     })){
         player.isAttacking = false
-        console.log('go')
+        enemy.health -= 20
+        document.querySelector('#enemyHealth').style.width = enemy.health + '%'
     }
 
     if(rectangularCollision({
@@ -161,13 +163,14 @@ function animate() {
         rectangle2: player
     })){
         enemy.isAttacking = false
-        console.log('enemy attack works')
+        player.health -= 20
+        document.querySelector('#playerHealth').style.width = player.health + '%'
     }
 }
 animate()
 
 window.addEventListener('keydown', (event)=>{
-    console.log(event.key)
+    // console.log(event.key)
     switch (event.key) {
         case 'd':
             keys.d.pressed = true
@@ -202,7 +205,7 @@ window.addEventListener('keydown', (event)=>{
             enemy.attack()
         break
     }
-    console.log(event.key);
+    // console.log(event.key);
 })
 
 window.addEventListener('keyup', (event)=>{
@@ -227,5 +230,5 @@ window.addEventListener('keyup', (event)=>{
             keys.ArrowUp.pressed = false
         break
     }
-    console.log(event.key);
+    // console.log(event.key);
 })
